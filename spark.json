@@ -1,7 +1,7 @@
 {
-  "name": "HC_SR04",
+  "name": "photon_book",
   "author": "Simon Monk <simon@monkmakes.com>",
   "license": "MIT",
   "version": "0.0.10",
-  "description": "A library for the HC-SR04 ultrasonic rangefinder"
+  "description": "The code for the book Getting Started with Photon"
 }
