@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+var accessToken = "cb8b348000e9d0ea9e354990bbd39ccbfb57b30e";
+var deviceID = "54ff72066672524860351167"
+var url = "https://api.spark.io/v1/devices/" + deviceID + "/relay";
+
+function setRelay(message)
+{
+	$.post(url, {params: message, access_token: accessToken });
+}  
+
+
+</script>
+</head>	
+
+<body>
+
+<h1>Relay Control</h1>	
+<table>	
+<tr>
+	<td><input type="button" onClick="setRelay('11')" value="Relay 1 ON"/></td>
+	<td><input type="button" onClick="setRelay('10')" value="Relay 1 OFF"/></td>
+</tr>
+<tr>
+	<td><input type="button" onClick="setRelay('21')" value="Relay 2 ON"/></td>
+	<td><input type="button" onClick="setRelay('20')" value="Relay 2 OFF"/></td>
+</tr>
+<tr>
+	<td><input type="button" onClick="setRelay('31')" value="Relay 3 ON"/></td>
+	<td><input type="button" onClick="setRelay('30')" value="Relay 3 OFF"/></td>
+</tr>
+<tr>
+	<td><input type="button" onClick="setRelay('41')" value="Relay 4 ON"/></td>
+	<td><input type="button" onClick="setRelay('40')" value="Relay 4 OFF"/></td>
+</tr>
+</table>	
+</body>
+</html>

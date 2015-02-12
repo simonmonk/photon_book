@@ -1,0 +1,62 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+<style type="text/css">
+      .on  { background:green; }
+      .off { background:red; }
+	  
+ 	  input[type=button] {
+		 color: white;
+		 font-size: 2.5em;
+ 	 }
+</style>
+
+<script>
+var accessToken = "cb8b348000e9d0ea9e354990bbd39ccbfb57b30e";
+var deviceID = "54ff72066672524860351167"
+var url = "https://api.spark.io/v1/devices/" + deviceID + "/relay";
+
+
+
+function toggleState(item, relayNumber){
+	function setRelay(message){
+		$.post(url, {params: message, access_token: accessToken}, callback);
+	}  
+	function callback(data, status){
+		if (data.return_value == 1) {
+			if (item.className == "on") {
+				item.className="off";
+			}
+			else {
+				item.className="on";
+			}
+		}
+		else
+		{
+			alert("Could not Connect to Photon");
+		}
+	}
+   if(item.className == "on") {
+	  setRelay(relayNumber + "0");
+   } else {
+	  setRelay(relayNumber + "1");
+   }
+}
+
+</script>
+
+
+</head>	
+
+<body>
+
+<h1>Relay Control</h1>	
+
+<input type="button" id="btn" value="Relay 1" class="off" onclick="toggleState(this, '1')" /> <br/>
+<input type="button" id="btn" value="Relay 2" class="off" onclick="toggleState(this, '2')" /> <br/>
+<input type="button" id="btn" value="Relay 3" class="off" onclick="toggleState(this, '3')" /> <br/>
+<input type="button" id="btn" value="Relay 4" class="off" onclick="toggleState(this, '4')" /> <br/>
+
+</body>
+</html>

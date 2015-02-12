@@ -1,0 +1,36 @@
+<html>
+
+  <head>
+
+     <!-- define on/off styles -->
+     <style type="text/css">
+      .on  { background:green; }
+      .off { background:red; }
+ 	 input[type=button] {
+ 	     
+		 color: white;
+		 font-size: 2.5em;
+ 	 }
+     </style>
+	 
+
+
+     <!-- define the toggle function -->
+     <script language="javascript">
+        function toggleState(item){
+           if(item.className == "on") {
+              item.className="off";
+           } else {
+              item.className="on";
+           }
+        }
+     </script>
+  </head>
+
+  <body>
+     <!-- call 'toggleState' whenever clicked -->
+     <input type="button" id="btn" value="button"
+        class="off" onclick="toggleState(this)" />
+  </body>
+
+</html>
