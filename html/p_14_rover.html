@@ -1,0 +1,128 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="raphael.2.1.0.min.js"></script>
+<script src="justgage.1.0.1.min.js"></script>
+
+<style>
+
+.meters {
+    border: 1px solid black;
+}
+
+.controls {
+	width: 150px;
+	font-size: 32pt;
+	text-align: center;
+	padding: 15px;
+	background-color: green;
+	color: white;
+}
+</style>
+
+
+
+<script>
+var accessToken = "cb8b348000e9d0ea9e354990bbd39ccbfb57b30e";
+var deviceID = "55ff6b065075555322151487"
+var volts_url = "https://api.spark.io/v1/devices/" + deviceID + "/volts";
+var distance_url = "https://api.spark.io/v1/devices/" + deviceID + "/distance";
+var control_url = "https://api.spark.io/v1/devices/" + deviceID + "/control";
+
+
+function callbackVolts(data, status){
+	if (status == "success") {
+		volts = parseFloat(data.result);
+		volts = volts.toFixed(2);
+		volts_gauge.refresh(volts);
+		setTimeout(getVoltsReading, 10000);
+	}
+}
+
+function callbackDistance(data, status){
+	if (status == "success") {
+		dist = parseFloat(data.result);
+		dist = dist.toFixed(2);
+		dist_gauge.refresh(dist);
+		setTimeout(getDistanceReading, 1000);
+	}
+}
+
+function getVoltsReading(){
+   	$.get(volts_url, {access_token: accessToken}, callbackVolts);
+}
+
+function getDistanceReading(){
+   	$.get(distance_url, {access_token: accessToken}, callbackDistance);
+}
+
+function sendControl(message){
+   	$.post(control_url, {params: message, access_token: accessToken});
+}
+
+function keyPress(event){
+	code = event.keyCode;
+	if (code == 119) {
+		sendControl('F-100');
+	}
+	else if (code == 97) {
+		sendControl('L-50');
+	}
+	else if (code == 115) {
+		sendControl('S');
+	}
+	else if (code == 100) {
+		sendControl('R-50');
+	}
+	else if (code == 122) {
+		sendControl('B-75');
+	}
+}
+
+$(document).keypress(keyPress);
+
+</script>
+</head>	
+
+<body>
+<table align="center">
+<tr>
+<td class="meters"><div id="voltsGauge" ></div></td>
+<td class="meters"><div id="distanceGauge" ></div></td>
+</tr>
+</table>
+
+<table align="center">
+<tr><td></td><td class="controls" onClick="sendControl('F-100');">W</td><td></td></tr>
+<tr><td  class="controls" onClick="sendControl('L-50');">A</td>
+    <td  class="controls" onClick="sendControl('S');">S</td>
+    <td  class="controls" onClick="sendControl('R-50');">D</td>
+</tr>
+<tr><td></td><td  class="controls" onClick="sendControl('B-75');">Z</td><td></td></tr>
+</table>
+
+
+
+<script>
+var volts_gauge = new JustGage({
+    id: "voltsGauge",
+    value: 0,
+    min: 4,
+    max: 7,
+	levelColors: ["#FF0000", "#FFFF00", "#00FF00"],
+    title: "Battery Voltage"
+});
+
+var dist_gauge = new JustGage({
+    id: "distanceGauge",
+    value: 0,
+    min: 5,
+    max: 250,
+    title: "Rangefinder (cm)"
+});
+getVoltsReading();
+getDistanceReading();
+</script>
+
+</body>
+</html>

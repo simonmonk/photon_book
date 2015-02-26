@@ -1,0 +1,37 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+var accessToken = "cb8b348000e9d0ea9e354990bbd39ccbfb57b30e";
+var deviceID = "54ff72066672524860351167"
+var url = "https://api.spark.io/v1/devices/" + deviceID + "/morse";
+
+function callback(data, status){
+	if (data.return_value == 1) {
+		alert("Your Message is being sent");
+	}
+	else
+	{
+		alert("Could not Connect to Photon");
+	}
+}
+
+function sendMorse(){
+	message = $("#message").val();
+   	$.post(url, {params: message, access_token: accessToken}, callback);
+}
+
+</script>
+
+
+</head>	
+
+<body>
+
+<h1>Morse Code Sender</h1>	
+<input id="message" value="Hello World" size="64"/>
+<input type="button" value="Send" onclick="sendMorse()" /> <br/>
+
+</body>
+</html>

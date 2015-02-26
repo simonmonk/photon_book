@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="raphael.2.1.0.min.js"></script>
+<script src="justgage.1.0.1.min.js"></script>
+
+<script>
+var accessToken = "cb8b348000e9d0ea9e354990bbd39ccbfb57b30e";
+var deviceID = "54ff72066672524860351167"
+var url = "https://api.spark.io/v1/devices/" + deviceID + "/volts";
+
+function callback(data, status){
+	if (status == "success") {
+		volts = parseFloat(data.result);
+		volts = volts.toFixed(2);
+		g.refresh(volts);
+		setTimeout(getReading, 1000);
+	}
+	else {
+		alert("There was a problem");
+	}
+}
+
+function getReading(){
+   	$.get(url, {access_token: accessToken}, callback);
+}
+</script>
+</head>	
+
+<body>
+<div id="gauge" class="200x160px"></div>
+
+<script>
+var g = new JustGage({
+    id: "gauge",
+    value: 0,
+    min: 0,
+    max: 3.3,
+    title: "Volts"
+});
+getReading();
+</script>
+
+</body>
+</html>
