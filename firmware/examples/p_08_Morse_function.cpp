@@ -26,7 +26,7 @@ void loop() {
 }
 
 int startFlashing(String param) {
-    if (message.length() <= 64) {
+    if (param.length() <= 63) {
         message = param;
         flashing = true;
         return 1;
